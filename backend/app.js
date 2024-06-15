@@ -3,6 +3,7 @@ import cors from "cors"
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// import Assessment from './models/Assessment.js'; // Import the Assessment model
 
 const app=express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 import assignmentRoutes from './routes/assignmentRoutes.js';
 import assessmentRoutes from './routes/assessmentRoutes.js'; 
 import studentRoutes from './routes/studentRoutes.js'
+import AssessmentResult from "./models/assessmentResult.model.js";
 // import userRoutes from "./routes/user.routes.js"
 
 app.get("/",(req,res)=>{
@@ -23,7 +25,7 @@ app.use('/assignments', assignmentRoutes);
 app.use('/assessments', assessmentRoutes);
 app.use('/api', studentRoutes);
 
-const uploadDir = '/Users/bhavyajain/Desktop/CFG2024/Team-48/backend/upload'; 
+const uploadDir = '/Users/bhavyajain/Desktop/CFG2024/Team-48/backend/upload';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -39,16 +41,30 @@ const upload = multer({
   limits: { fileSize: 1000000 }, 
 });
 
-// Endpoint to handle file upload
-app.post('/submitmp3', upload.single('audioFile'), (req, res) => {
+// Endpoint to handle file upload and create assessment record
+app.post('/submitmp3', upload.single('audioFile'), async (req, res) => {
   if (!req.file) {
     // No file uploaded
     return res.status(400).json({ message: 'No file uploaded' });
   }
   
-  // File uploaded successfully
-  console.log('File uploaded:', req.file.filename);
-  res.json({ message: 'File uploaded successfully' });
+  try {
+    // Create a new assessment record
+    const newAssessment = await AssessmentResult.create({
+      studentName: req.body?.studentName||"Rahul",
+      language: req.body?.language||"Hindi",
+      grade: req.body?.grade||"3",
+      level: req.body?.level||"para",
+      assignmentNo: req.file?.assignmentNo||"1",
+      audioFile: req.file.filename, // Store the filename in the assessment record
+    });
+
+    console.log('Assessment created:', newAssessment);
+    res.json({ message: 'File uploaded and assessment created successfully', assessment: newAssessment });
+  } catch (err) {
+    console.error('Error creating assessment:', err);
+    res.status(500).json({ message: 'Error creating assessment', error: err.message });
+  }
 });
 
-export {app}
+export { app };

@@ -15,8 +15,6 @@ const assessmentResultSchema = new Schema(
     grade: {
       type: Number,
       required: true,
-      min: 3,
-      max: 5,
     },
     level: {
       type: String,
