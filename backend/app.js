@@ -23,7 +23,7 @@ app.use('/assignments', assignmentRoutes);
 app.use('/assessments', assessmentRoutes);
 app.use('/api', studentRoutes);
 
-const uploadDir = 'C:/Users/Nehal Mahajan/OneDrive/Desktop/cfg/Team-48/backend/upload'; 
+const uploadDir = '/Users/bhavyajain/Desktop/CFG2024/Team-48/backend/upload'; 
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
