@@ -1,0 +1,18 @@
+.header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+  
+  .organization-name {
+    font-size: 1.5rem;
+  }
+  
