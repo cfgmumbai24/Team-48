@@ -21,6 +21,8 @@ function AssessmentForm() {
     e.preventDefault();
     // Add username to formData if needed
     console.log(formData)
+    const jsonData = JSON.stringify(formData);
+    localStorage.setItem("userData",jsonData);
     const dataToSend = {
       ...formData,
       // Assuming username is 's', replace it with the actual value if required

@@ -89,6 +89,9 @@ const Dashboard = () => {
     }
   };
 
+  let userData=localStorage.getItem("userData")
+  userData=JSON.parse(userData);
+
   return (
     <div className="Apph">
       <Header />
@@ -96,9 +99,9 @@ const Dashboard = () => {
         {view === 'userInfo' ? (
           <div class='container'>
             <h1>STUDENT DETAILS</h1>
-            <p>Name: {userInfo.name}</p>
-            <p>Age: {userInfo.age}</p>
-            <p>Email: {userInfo.email}</p>
+            <p>Name: {userData.studentName}</p>
+            <p>Language: {userData.language}</p>
+            <p>grade: {userData.grade}</p>
             {/* Add more user information as needed */}
             <button onClick={startAssessment}>Start Assessment</button>
             
