@@ -1,11 +1,11 @@
 import React from 'react';
 import './Header.css';
-
+import logo from '../components/1630621084622.jpeg'
 function Header() {
   return (
     <header className="header">
-      <img src="sample-logo.png" alt="Logo" className="logo" />
-      <h1 className="organization-name">VIPO</h1>
+      <img src={logo} alt="Logo" className="logo" />
+      <h1 className="organization-name">VOPA</h1>
     </header>
   );
 }

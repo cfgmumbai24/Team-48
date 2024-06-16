@@ -7,12 +7,15 @@
   height: 100vh;
   background-color: #282c34;
   color: white;
+  /* margin-bottom: 500px; */
 }
 
 .App-header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 100px;
+  padding: 10px;
 }
 
 button {
