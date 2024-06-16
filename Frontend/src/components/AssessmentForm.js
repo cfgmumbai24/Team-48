@@ -78,6 +78,7 @@
 // export default AssessmentForm;
 import React, { useState } from 'react';
 import './AssessmentForm.css';
+import {useNavigate} from 'react-router-dom';
 
 function AssessmentForm() {
   const [formData, setFormData] = useState({
@@ -99,6 +100,14 @@ function AssessmentForm() {
     const formDataJson = JSON.stringify(formData);
     console.log(formDataJson);
     // You can send formDataJson to backend or further processing here
+  };
+
+
+  const history = useNavigate();
+
+  const handleClick = () => {
+    // Navigate to Dashboard.js (assuming it's a component or route)
+    history.push('/Dashboard');
   };
 
   return (
@@ -182,7 +191,7 @@ function AssessmentForm() {
         />
       </div>
 
-      <button type="submit" className="submit-button">Submit</button>
+      <button type="submit" onClick={handleClick} className="submit-button">Submit</button>
     </form>
   );
 }
