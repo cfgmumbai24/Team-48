@@ -91,6 +91,7 @@ import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import IndexPage from './Pages/IndexPage.js'
 import Dashboard from './Pages/Dashboard.js'
+import Charts from './components/Chart.js';
 // import './App.css'
 const App = () => {
   return (
@@ -99,6 +100,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<IndexPage/>}/>
       <Route path="/Dashboard" element={<Dashboard/>}/>
+      <Route path="/Charts" element={<Charts/>}/>
     </Routes>
     </BrowserRouter>
     </>

@@ -1,5 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
+import Header from './Header.js';
+import Footer from './Footer.js';
 import './Chart.css';
 
 // Sample data for students' performance
@@ -103,6 +105,7 @@ const Charts = () => {
 
   return (
     <div className="charts-container">
+      <Header />
       <div className="chart">
         <h2>Grades of Students</h2>
         <Chart options={lineOptions} series={lineSeries} type="line" width="100%" height={350} />
@@ -143,6 +146,7 @@ const Charts = () => {
           ))}
         </ul>
       </div>
+      <Footer/>
     </div>
   );
 };
