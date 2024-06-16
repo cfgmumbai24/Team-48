@@ -1,0 +1,35 @@
+/* Result.css */
+.result-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.result-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.result-container p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 18px;
+}
+
+.result-container .pass-message {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.result-container .fail-message {
+  color: #dc3545;
+  font-weight: bold;
+}

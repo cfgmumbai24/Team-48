@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer';
-// import axios from 'axios';
-import Header from '../components/Header.js'
-import Footer from '../components/Footer.js'
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+import Result from '../components/Result.js'; // Import the Result component
 import axios from 'axios';
 import './Dashboard.css';
 // import './App.css'; // Ensure you have basic styles
@@ -23,10 +23,6 @@ const Dashboard = () => {
     }
   };
 
-  // // Usage example
-  // const filePath = '/uploads/1623871777123-audio.mp3'; // Example path (adjust to match your actual file path)
-  // sendFilePathToBackend(filePath);
-
   const recorderControls = useVoiceVisualizer();
   const { startRecording, stopRecording, recordedBlob, error } = recorderControls;
 
@@ -34,6 +30,8 @@ const Dashboard = () => {
   const [uploadStatus, setUploadStatus] = useState('idle'); // Track upload progress
   const [recordedAudioUrl, setRecordedAudioUrl] = useState(null); // Store audio URL
   const [view, setView] = useState('userInfo');
+  const [processing, setProcessing] = useState(false); // Track processing state
+  const [resultData, setResultData] = useState({ score: 0, comments: '' }); // Store result data
   const userInfo = {
     name: 'John Doe',
     age: 30,
@@ -52,7 +50,6 @@ const Dashboard = () => {
       console.log(audioURL);
       setRecordedAudioUrl(audioURL);
     } else {
-
       setRecordedAudioUrl(null); // Clear URL when recording stops/clears
     }
 
@@ -83,43 +80,57 @@ const Dashboard = () => {
       });
       console.log('Upload successful:', response.data);
       setUploadStatus('success');
+      setProcessing(true); // Start processing state
+
+      // Simulate processing delay and then set the result data
+      setTimeout(() => {
+        setProcessing(false); // Stop processing state
+        setResultData({ score: 85, comments: 'Good job!' }); // Example result data, replace with actual data from response
+        setView('result'); // Navigate to result view
+      }, 2000); // 2-3 seconds delay
     } catch (error) {
       console.error('Error uploading audio:', error);
       setUploadStatus('error'); // Indicate upload error
     }
   };
 
-  let userData=localStorage.getItem("userData")
-  userData=JSON.parse(userData);
+  let userData = localStorage.getItem("userData")
+  userData = JSON.parse(userData);
+  let language=userData.language;
+
+  let text="";
+  
+    switch (language) {
+      case 'hindi':
+        text = 'यह नमूना पाठ है';
+        break;
+      case 'marathi':
+        text = 'हे नमुना मजकूर आहे';
+        break;
+      case 'english':
+      default:
+        text = 'This is sample text';
+    }
 
   return (
     <div className="Apph">
       <Header />
       <div className="App">
         {view === 'userInfo' ? (
-          <div class='container'>
+          <div className='container'>
             <h1>STUDENT DETAILS</h1>
             <p>Name: {userData.studentName}</p>
             <p>Language: {userData.language}</p>
-            <p>grade: {userData.grade}</p>
+            <p>Grade: {userData.grade}</p>
             {/* Add more user information as needed */}
             <button onClick={startAssessment}>Start Assessment</button>
-            
           </div>
-        
-        ) : (
+        ) : view === 'assessment' ? (
           <div>
             <div className="App-header">
-              <div className ="mainText">Hello ji</div>
-              {/* <h1 className ="voice-name">Voice Recorder</h1> */}
-              {/* <button onClick={() => { setIsRecording(true); startRecording(); }} disabled={isRecording}>
-                Start Recording
-              </button> */}
-              {/* <button onClick={() => { setIsRecording(false); stopRecording(); }} disabled={!isRecording}>
-                Stop Recording
-              </button> */}
+              <div className="mainText">{text}</div>
               <VoiceVisualizer controls={recorderControls} />
-              <button onClick={submitAudio} >
+              <button onClick={submitAudio}>
                 Submit Audio
               </button>
             </div>
@@ -133,9 +144,14 @@ const Dashboard = () => {
                 Your browser does not support the audio element.
               </audio>
             )}
-           
           </div>
-        )}
+        ) : processing ? (
+          <div>
+            <p>Processing, please wait...</p>
+          </div>
+        ) : view === 'result' ? (
+          <Result resultData={resultData} /> // Use the Result component
+        ) : null}
       </div>
       <Footer />
     </div>
