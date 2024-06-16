@@ -26,7 +26,7 @@ const assessmentResultSchema = new Schema(
     },
     audioFile: {
       type: String,
-      required: true,
+      // required: true,
     },
     score: {
       type: Number,
