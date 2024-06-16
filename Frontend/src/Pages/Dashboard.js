@@ -1,12 +1,32 @@
 import { useState, useEffect } from 'react';
 import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer';
-import axios from 'axios';
+// import axios from 'axios';
 import Header from '../components/Header.js'
 import Footer from '../components/Footer.js'
-
+import axios from 'axios';
+import './Dashboard.css';
 // import './App.css'; // Ensure you have basic styles
 
 const Dashboard = () => {
+
+  const sendFilePathToBackend = async (filePath) => {
+    try {
+      const response = await axios.post('http://localhost:3000/send_mp3_path', {
+        filePath: filePath
+      });
+
+      console.log('Response from backend:', response.data);
+      // Handle response as needed
+    } catch (error) {
+      console.error('Error sending file path:', error);
+      // Handle error
+    }
+  };
+
+  // // Usage example
+  // const filePath = '/uploads/1623871777123-audio.mp3'; // Example path (adjust to match your actual file path)
+  // sendFilePathToBackend(filePath);
+
   const recorderControls = useVoiceVisualizer();
   const { startRecording, stopRecording, recordedBlob, error } = recorderControls;
 
@@ -32,7 +52,7 @@ const Dashboard = () => {
       console.log(audioURL);
       setRecordedAudioUrl(audioURL);
     } else {
-      
+
       setRecordedAudioUrl(null); // Clear URL when recording stops/clears
     }
 
@@ -70,50 +90,51 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="App">
-        <Header/>
-        <div className="App">
-      {view === 'userInfo' ? (
-        <div>
-          <h1>User Information</h1>
-          <p>Name: {userInfo.name}</p>
-          <p>Age: {userInfo.age}</p>
-          <p>Email: {userInfo.email}</p>
-          {/* Add more user information as needed */}
-          <button onClick={startAssessment}>Start Assessment</button>
-        </div>
-      ) : (
-        <div>
-          <header className="App-header">
+    <div className="Apph">
+      <Header />
+      <div className="App">
+        {view === 'userInfo' ? (
+          <div class='container'>
+            <h1>STUDENT DETAILS</h1>
+            <p>Name: {userInfo.name}</p>
+            <p>Age: {userInfo.age}</p>
+            <p>Email: {userInfo.email}</p>
+            {/* Add more user information as needed */}
+            <button onClick={startAssessment}>Start Assessment</button>
+            
+          </div>
+        
+        ) : (
           <div>
-            <p>DUMMY TEXT</p>
-        </div>
-        <h1>Voice Recorder</h1>
-        <button onClick={() => { setIsRecording(true); startRecording(); }} disabled={isRecording}>
-          Start Recording
-        </button>
-        <button onClick={() => { setIsRecording(false); stopRecording(); }} disabled={!isRecording}>
-          Stop Recording
-        </button>
-        <VoiceVisualizer controls={recorderControls} />
-      </header>
-      <button onClick={submitAudio} >
-        Submit Audio
-      </button>
-      {uploadStatus === 'uploading' && <p>Uploading audio...</p>}
-      {uploadStatus === 'error' && <p>Error uploading audio. Please try again.</p>}
-      {uploadStatus === 'success' && <p>Audio uploaded successfully!</p>}
+            <div className="App-header">
+              <div className ="mainText">Hello ji</div>
+              {/* <h1 className ="voice-name">Voice Recorder</h1> */}
+              {/* <button onClick={() => { setIsRecording(true); startRecording(); }} disabled={isRecording}>
+                Start Recording
+              </button> */}
+              {/* <button onClick={() => { setIsRecording(false); stopRecording(); }} disabled={!isRecording}>
+                Stop Recording
+              </button> */}
+              <VoiceVisualizer controls={recorderControls} />
+              <button onClick={submitAudio} >
+                Submit Audio
+              </button>
+            </div>
+            {uploadStatus === 'uploading' && <p>Uploading audio...</p>}
+            {uploadStatus === 'error' && <p>Error uploading audio. Please try again.</p>}
+            {uploadStatus === 'success' && <p>Audio uploaded successfully!</p>}
 
-      {/* Optional Audio Preview (if supported by browser) */}
-      {recordedAudioUrl && (
-        <audio controls src={recordedAudioUrl}>
-          Your browser does not support the audio element.
-        </audio>
-      )}
-      <Footer/>
-        </div>
-      )}
-    </div>     
+            {/* Optional Audio Preview (if supported by browser) */}
+            {recordedAudioUrl && (
+              <audio controls src={recordedAudioUrl}>
+                Your browser does not support the audio element.
+              </audio>
+            )}
+           
+          </div>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };
