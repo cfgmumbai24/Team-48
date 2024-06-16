@@ -1,0 +1,47 @@
+/* Chart.css */
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .chart {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  
+  .remedial-solutions, .blog-solutions {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  
+  .remedial-solutions ul, .blog-solutions ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .video-link, .blog-link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .thumbnail {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .video-link a, .blog-link a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .video-link a:hover, .blog-link a:hover {
+    text-decoration: underline;
+  }
+  
